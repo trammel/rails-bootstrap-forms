@@ -454,8 +454,8 @@ error will be displayed below the field. Rails normally wraps the fields in a
 div (field_with_errors), but this behavior is suppressed. Here's an example:
 
 ```html
-<div class="form-group has-error">
   <input class="form-control" id="user_email" name="user[email]" type="email" value="">
+<div class="form-group has-danger">
   <label class="form-control-label" for="user_email">Email</label>
   <span class="help-block">can't be blank</span>
 </div>
