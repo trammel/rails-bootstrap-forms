@@ -257,7 +257,7 @@ module BootstrapForm
     end
 
     def error_class
-      "has-error"
+      "has-danger"
     end
 
     def feedback_class
