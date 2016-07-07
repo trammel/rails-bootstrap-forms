@@ -194,6 +194,7 @@ module BootstrapForm
       content_tag(:div, options.except(:id, :label, :help, :label_col, :control_col, :layout)) do
         label = generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]) if options[:label]
         control = capture(&block).to_s
+        control.concat(generate_error_messages(name).to_s)
         control.concat(generate_help(name, options[:help]).to_s)
 
         if get_group_layout(options[:layout]) == :horizontal
@@ -363,7 +364,7 @@ module BootstrapForm
       options[:class] = classes.compact.join(" ")
 
       if label_errors && has_error?(name)
-        error_messages = get_error_messages(name)
+        error_messages = get_error_messages(name).join(", ")
         label_text = (options[:text] || object.class.human_attribute_name(name)).to_s.concat(" #{error_messages}")
         label(name, label_text, options.except(:text))
       else
@@ -372,17 +373,27 @@ module BootstrapForm
 
     end
 
+    def generate_error_messages(name)
+      error_messages = get_error_messages(name) if has_error?(name) && inline_errors
+      return if !error_messages
+
+      # error_message ||= get_error_message_by_i18n_key(name)
+
+      error_messages.map! { |msg| content_tag(:li, msg) }
+
+      content_tag(:ul, error_messages.join('').html_safe, class: 'form-group-alert') if error_messages.present?
+    end
+
     def generate_help(name, help_text)
-      help_text = get_error_messages(name) if has_error?(name) && inline_errors
       return if help_text === false
 
       help_text ||= get_help_text_by_i18n_key(name)
 
-      content_tag(:span, help_text, class: 'help-block') if help_text.present?
+      content_tag(:p, help_text, class: 'text-muted') if help_text.present?
     end
 
     def get_error_messages(name)
-      object.errors[name].join(", ")
+      object.errors[name]
     end
 
     def inputs_collection(name, collection, value, text, options = {}, &block)
@@ -407,6 +418,18 @@ module BootstrapForm
         inputs.html_safe
       end
     end
+
+    # def get_error_text_by_i18n_key(name)
+    #   underscored_scope = "activerecord.errors.#{object.class.name.underscore}"
+    #   downcased_scope = "activerecord.errors.#{object.class.name.downcase}"
+    #   error_text = I18n.t(name, scope: underscored_scope, default: '').presence
+    #   error_text ||= if text = I18n.t(name, scope: downcased_scope, default: '').presence
+    #     warn "I18n key '#{downcased_scope}.#{name}' is deprecated, use '#{underscored_scope}.#{name}' instead"
+    #     text
+    #   end
+    #
+    #   error_text
+    # end
 
     def get_help_text_by_i18n_key(name)
       underscored_scope = "activerecord.help.#{object.class.name.underscore}"
