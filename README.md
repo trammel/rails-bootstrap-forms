@@ -235,7 +235,7 @@ Which produces the following output:
 
 ```erb
 <div class="form-group has-warning" data-foo="bar">
-  <label class="control-label" for="user_name">Id</label>
+  <label class="form-control-label" for="user_name">Id</label>
   <input class="form-control" id="user_name" name="user[name]" type="text">
 </div>
 ```
@@ -316,7 +316,7 @@ Here's the output:
 
 ```html
 <div class="form-group">
-  <label class="col-sm-2 control-label" for="user_email">Email</label>
+  <label class="col-sm-2 form-control-label" for="user_email">Email</label>
   <div class="col-sm-10">
     <p class="form-control-static">test@email.com</p>
   </div>
@@ -455,8 +455,8 @@ div (field_with_errors), but this behavior is suppressed. Here's an example:
 
 ```html
 <div class="form-group has-error">
-  <label class="control-label" for="user_email">Email</label>
   <input class="form-control" id="user_email" name="user[email]" type="email" value="">
+  <label class="form-control-label" for="user_email">Email</label>
   <span class="help-block">can't be blank</span>
 </div>
 ```
