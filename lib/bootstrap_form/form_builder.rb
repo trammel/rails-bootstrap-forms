@@ -210,13 +210,11 @@ module BootstrapForm
       options[:class] = ["form-group", options[:class]].compact.join(' ')
       options[:class] << " row" if get_group_layout(options[:layout]) == :horizontal
       options[:class] << " #{error_class}" if has_error?(name)
-      options[:class] << " #{feedback_class}" if options[:icon]
 
-      content_tag(:div, options.except(:id, :label, :help, :icon, :label_col, :control_col, :layout)) do
+      content_tag(:div, options.except(:id, :label, :help, :label_col, :control_col, :layout)) do
         label = generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]) if options[:label]
         control = capture(&block).to_s
         control.concat(generate_help(name, options[:help]).to_s)
-        control.concat(generate_icon(options[:icon])) if options[:icon]
 
         if get_group_layout(options[:layout]) == :horizontal
           control_class = options[:control_col] || control_col
@@ -281,8 +279,8 @@ module BootstrapForm
       "has-danger"
     end
 
-    def feedback_class
-      "has-feedback"
+    def error_control_class
+      "form-control-danger"
     end
 
     def control_specific_class(method)
@@ -331,14 +329,12 @@ module BootstrapForm
       wrapper_class = css_options.delete(:wrapper_class)
       wrapper_options = css_options.delete(:wrapper)
       help = options.delete(:help)
-      icon = options.delete(:icon)
       label_col = options.delete(:label_col)
       control_col = options.delete(:control_col)
       layout = get_group_layout(options.delete(:layout))
       form_group_options = {
         id: options[:id],
         help: help,
-        icon: icon,
         label_col: label_col,
         control_col: control_col,
         layout: layout,
@@ -414,10 +410,6 @@ module BootstrapForm
       else
         content_tag(:small, help_text, class: 'form-text text-muted')
       end
-    end
-
-    def generate_icon(icon)
-      content_tag(:span, "", class: "glyphicon glyphicon-#{icon} form-control-feedback")
     end
 
     def get_error_messages(name)
