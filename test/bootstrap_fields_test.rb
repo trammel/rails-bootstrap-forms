@@ -39,7 +39,7 @@ class BootstrapFieldsTest < ActionView::TestCase
 
   test "file fields can have span attributes set correctly" do
     expected = %{<div class="form-group"><label class="custom-file" for="user_misc">Misc<input class="custom-file-input" id="user_misc" name="user[misc]" type="file" /><span attribute="value" class="custom-file-control"></span></label></div>}
-    assert_equal expected, @builder.file_field(:misc, span: {attribute: 'value'})
+    assert_equivalent_xml expected, @builder.file_field(:misc, span: {attribute: 'value'})
   end
 
   test "hidden fields are supported" do
