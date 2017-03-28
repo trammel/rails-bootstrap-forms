@@ -412,7 +412,7 @@ module BootstrapForm
       if is_error
         content_tag(:div, help_text, class: 'form-control-feedback')
       else
-        content_tag(:p, help_text, class: 'form-text text-muted')
+        content_tag(:small, help_text, class: 'form-text text-muted')
       end
     end
 
