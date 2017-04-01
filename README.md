@@ -56,9 +56,9 @@ This generates the following HTML:
     <input class="form-control" id="user_password" name="user[password]" type="password">
   </div>
   <div class="form-check">
-    <label for="user_remember_me">
+    <label class="form-check-label" for="user_remember_me">
       <input name="user[remember_me]" type="hidden" value="0">
-      <input id="user_remember_me" name="user[remember_me]" type="checkbox" value="1"> Remember me
+      <input class="form-check-input" id="user_remember_me" name="user[remember_me]" type="checkbox" value="1"> Remember me
     </label>
   </div>
   <input class="btn btn-secondary" name="commit" type="submit" value="Log In">

@@ -140,13 +140,12 @@ module BootstrapForm
       end
 
       disabled_class = " disabled" if options[:disabled]
+      label_class    = ["form-check-label", options[:label_class]].join(' ').squish
 
       if options[:inline]
-        label_class = " #{options[:label_class]}" if options[:label_class]
-        label(label_name, html, class: "form-check-inline#{disabled_class}#{label_class}")
+        label(label_name, html, class: ['form-check-inline', disabled_class, label_class].join(' ').squish)
       else
-        label_class    = ["form-check-label", options[:label_class]].compact.join(' ')
-        content_tag(:div, class: "form-check#{disabled_class}") do
+        content_tag(:div, class: ['form-check', disabled_class].join(' ').squish) do
           label(label_name, html, class: label_class)
         end
       end
@@ -207,7 +206,7 @@ module BootstrapForm
       options = args.extract_options!
       name = args.first
 
-      options[:class] = ["form-group", options[:class]].compact.join(' ')
+      options[:class] = ["form-group", options[:class]].compact.join(' ').squish
       options[:class] << " row" if get_group_layout(options[:layout]) == :horizontal
       options[:class] << " #{error_class}" if has_error?(name)
 
@@ -321,7 +320,7 @@ module BootstrapForm
       # Add control_class; allow it to be overridden by :control_class option
       css_options = html_options || options
       control_classes = css_options.delete(:control_class) { control_class }
-      css_options[:class] = [control_classes, css_options[:class]].compact.join(" ")
+      css_options[:class] = [control_classes, css_options[:class]].compact.join(" ").squish
       css_options[:class] << " form-control-danger" if has_error?(method)
 
       options = convert_form_tag_options(method, options) if acts_like_form_tag
@@ -384,7 +383,7 @@ module BootstrapForm
         classes << "required" if required_attribute?(object, name)
       end
 
-      options[:class] = classes.compact.join(" ")
+      options[:class] = classes.compact.join(" ").squish
 
       if label_errors && has_error?(name)
         error_messages = get_error_messages(name)

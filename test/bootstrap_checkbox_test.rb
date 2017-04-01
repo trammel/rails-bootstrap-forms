@@ -38,17 +38,17 @@ class BootstrapCheckboxTest < ActionView::TestCase
   end
 
   test "inline checkboxes" do
-    expected = %{<label class="form-check-inline" for="user_terms"><input name="user[terms]" type="hidden" value="0" /><input class="form-check-input" id="user_terms" name="user[terms]" type="checkbox" value="1" /> I agree to the terms</label>}
+    expected = %{<label class="form-check-inline form-check-label" for="user_terms"><input name="user[terms]" type="hidden" value="0" /><input class="form-check-input" id="user_terms" name="user[terms]" type="checkbox" value="1" /> I agree to the terms</label>}
     assert_equivalent_xml expected, @builder.check_box(:terms, label: 'I agree to the terms', inline: true)
   end
 
   test "disabled inline check_box" do
-    expected = %{<label class="form-check-inline disabled" for="user_terms"><input disabled="disabled" name="user[terms]" type="hidden" value="0" /><input class="form-check-input" disabled="disabled" id="user_terms" name="user[terms]" type="checkbox" value="1" /> I agree to the terms</label>}
+    expected = %{<label class="form-check-inline disabled form-check-label" for="user_terms"><input disabled="disabled" name="user[terms]" type="hidden" value="0" /><input class="form-check-input" disabled="disabled" id="user_terms" name="user[terms]" type="checkbox" value="1" /> I agree to the terms</label>}
     assert_equivalent_xml expected, @builder.check_box(:terms, label: 'I agree to the terms', inline: true, disabled: true)
   end
 
   test "inline checkboxes with custom label class" do
-    expected = %{<label class="form-check-inline btn" for="user_terms"><input name="user[terms]" type="hidden" value="0" /><input class="form-check-input" id="user_terms" name="user[terms]" type="checkbox" value="1" /> Terms</label>}
+    expected = %{<label class="form-check-inline form-check-label btn" for="user_terms"><input name="user[terms]" type="hidden" value="0" /><input class="form-check-input" id="user_terms" name="user[terms]" type="checkbox" value="1" /> Terms</label>}
     assert_equivalent_xml expected, @builder.check_box(:terms, inline: true, label_class: 'btn')
   end
 
