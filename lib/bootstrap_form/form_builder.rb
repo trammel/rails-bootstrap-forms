@@ -112,6 +112,7 @@ module BootstrapForm
     def check_box_with_bootstrap(name, options = {}, checked_value = "1", unchecked_value = "0", &block)
       options = options.symbolize_keys!
       check_box_options = options.except(:label, :label_class, :help, :inline)
+      check_box_options[:class] = ["form-check-input", check_box_options[:class]].join(' ').squish
 
       html = check_box_without_bootstrap(name, check_box_options, checked_value, unchecked_value)
       label_content = block_given? ? capture(&block) : options[:label]
@@ -120,14 +121,13 @@ module BootstrapForm
       label_name = name
       label_name = "#{name}_#{checked_value}" if options[:multiple]
 
-      disabled_class = " disabled" if options[:disabled]
-      label_class    = options[:label_class]
+      disabled_class = "disabled" if options[:disabled]
+      label_class    = ["form-check-label", options[:label_class]].join(' ').squish
 
       if options[:inline]
-        label_class = " #{label_class}" if label_class
-        label(label_name, html, class: "checkbox-inline#{disabled_class}#{label_class}")
+        label(label_name, html, class: ['form-check-inline', disabled_class, label_class].join(' ').squish)
       else
-        content_tag(:div, class: "checkbox#{disabled_class}") do
+        content_tag(:div, class: ['form-check', disabled_class].join(' ').squish) do
           label(label_name, html, class: label_class)
         end
       end
@@ -188,7 +188,7 @@ module BootstrapForm
       options = args.extract_options!
       name = args.first
 
-      options[:class] = ["form-group", options[:class]].compact.join(' ')
+      options[:class] = ["form-group", options[:class]].compact.join(' ').squish
       options[:class] << " #{error_class}" if has_error?(name)
 
       content_tag(:div, options.except(:id, :label, :help, :label_col, :control_col, :layout)) do
@@ -302,7 +302,7 @@ module BootstrapForm
       # Add control_class; allow it to be overridden by :control_class option
       css_options = html_options || options
       control_classes = css_options.delete(:control_class) { control_class }
-      css_options[:class] = [control_classes, css_options[:class]].compact.join(" ")
+      css_options[:class] = [control_classes, css_options[:class]].compact.join(" ").squish
 
       options = convert_form_tag_options(method, options) if acts_like_form_tag
 
@@ -361,7 +361,7 @@ module BootstrapForm
       classes << (custom_label_col || label_col) if get_group_layout(group_layout) == :horizontal
       classes << "required" if required_attribute?(object, name)
 
-      options[:class] = classes.compact.join(" ")
+      options[:class] = classes.compact.join(" ").squish
 
       if label_errors && has_error?(name)
         error_messages = get_error_messages(name).join(", ")
