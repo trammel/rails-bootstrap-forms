@@ -124,7 +124,7 @@ module BootstrapForm
     def check_box_with_bootstrap(name, options = {}, checked_value = "1", unchecked_value = "0", &block)
       options = options.symbolize_keys!
       check_box_options = options.except(:label, :label_class, :help, :inline)
-      check_box_options[:class] = ["form-check-input", check_box_options[:class]].compact.join(' ')
+      check_box_options[:class] = ["form-check-input", check_box_options[:class]].join(' ').squish
 
       html = check_box_without_bootstrap(name, check_box_options, checked_value, unchecked_value)
       label_content = block_given? ? capture(&block) : options[:label]
@@ -139,7 +139,7 @@ module BootstrapForm
           "#{name}_#{checked_value.to_s.gsub(/\s/, "_").gsub(/[^-\w]/, "").downcase}"
       end
 
-      disabled_class = " disabled" if options[:disabled]
+      disabled_class = "disabled" if options[:disabled]
       label_class    = ["form-check-label", options[:label_class]].join(' ').squish
 
       if options[:inline]
