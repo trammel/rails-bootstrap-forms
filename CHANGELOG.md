@@ -1,15 +1,4 @@
-## [Pending Release][] (2016-10-18)
-
-Bugfixes:
-  - Change error class from `has-error` to `has-danger`
-  - Change validation text class from `help-block` to `form-control-feedback`
-  - Change help text class from `help-block` to `form-text text-muted`
-  - Change checkbox classes from `checkbox` to `form-check` and added `form-check-label` to labels
-
-Features:
-  - Update to Bootstrap v4
-
-## [Pending Release][] (2016-10-18)
+### [Pending Release][]
 
 Bugfixes:
   - Change error class from `has-error` to `has-danger`
