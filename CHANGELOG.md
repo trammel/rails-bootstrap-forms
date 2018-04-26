@@ -1,4 +1,4 @@
-### [Pending Release][]
+## [Pending Release][]
 
 🚨 **This release adds support for Bootstrap v4 and drops support for Bootstrap v3.** 🚨
 

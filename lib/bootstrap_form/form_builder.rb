@@ -390,12 +390,14 @@ module BootstrapForm
       wrapper_class = css_options.delete(:wrapper_class)
       wrapper_options = css_options.delete(:wrapper)
       help = options.delete(:help)
+      icon = options.delete(:icon)
       label_col = options.delete(:label_col)
       control_col = options.delete(:control_col)
       layout = get_group_layout(options.delete(:layout))
       form_group_options = {
         id: options[:id],
         help: help,
+        icon: icon,
         label_col: label_col,
         control_col: control_col,
         layout: layout,
