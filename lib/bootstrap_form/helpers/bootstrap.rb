@@ -44,19 +44,18 @@ module BootstrapForm
         end
       end
 
-      def static_control(*args, &block)
+      def static_control(*args)
         options = args.extract_options!
         name = args.first
 
-        html = if block_given?
-          capture(&block)
-        else
-          object.send(name)
-        end
+        static_options = options.merge({
+          readonly: true,
+          control_class: [options[:control_class], static_class].compact.join(" ")
+        })
 
-        form_group_builder(name, options) do
-          content_tag(:p, html, class: static_class)
-        end
+        static_options[:value] = object.send(name) if static_options[:value].nil?
+
+        text_field_with_bootstrap(name, static_options)
       end
 
       def custom_control(*args, &block)
@@ -66,28 +65,34 @@ module BootstrapForm
         form_group_builder(name, options, &block)
       end
 
-      def prepend_and_append_input(options, &block)
+      def prepend_and_append_input(name, options, &block)
         options = options.extract!(:prepend, :append, :input_group_class)
         input_group_class = ["input-group", options[:input_group_class]].compact.join(' ')
 
-        input = capture(&block)
+        input = capture(&block) || "".html_safe
 
-        input = content_tag(:span, options[:prepend], class: input_group_class(options[:prepend])) + input if options[:prepend]
-        input << content_tag(:span, options[:append], class: input_group_class(options[:append])) if options[:append]
+        input = content_tag(:div, input_group_content(options[:prepend]), class: 'input-group-prepend') + input if options[:prepend]
+        input << content_tag(:div, input_group_content(options[:append]), class: 'input-group-append') if options[:append]
+        input << generate_error(name)
         input = content_tag(:div, input, class: input_group_class) unless options.empty?
         input
       end
 
-      def input_group_class(add_on_content)
-        if add_on_content.match(/btn/)
-          'input-group-btn'
-        else
-          'input-group-addon'
-        end
+      # Some helpers don't currently accept prepend and append. However, it's not
+      # clear if that's corrent. In the meantime, strip to options before calling
+      # methods that don't accept prepend and append.
+      def prevent_prepend_and_append!(options)
+        options.delete(:append)
+        options.delete(:prepend)
+      end
+
+      def input_group_content(content)
+        return content if content.match(/btn/)
+        content_tag(:span, content, class: 'input-group-text')
       end
 
       def static_class
-        "form-control-static"
+        "form-control-plaintext"
       end
     end
   end

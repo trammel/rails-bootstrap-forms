@@ -1,19 +1,48 @@
 ### [Pending Release][]
 
-Bugfixes:
-  - Change error class from `has-error` to `has-danger`
-  - Change validation text class from `help-block` to `form-control-feedback`
-  - Change help text class from `help-block` to `form-text text-muted`
-  - Change checkbox classes from `checkbox` to `form-check` and added `form-check-label` to labels
-  - Fixes for test for Rails 5.1
+🚨 **This release adds support for Bootstrap v4 and drops support for Bootstrap v3.** 🚨
 
-Features:
-  - Update to Bootstrap v4
+If your app uses Bootstrap v3, you should continue using bootstrap_form 2.7.x instead.
+
+Bootstrap v3 and v4 are very different, and thus bootstrap_form now produces different markup in order to target v4. The changes are too many to list here; you can refer to Bootstrap's [Migrating to v4](https://getbootstrap.com/docs/4.0/migration/) page for a detailed explanation.
+
+In addition to these necessary markup changes, the bootstrap_form API itself has the following important changes in this release.
+
+### Breaking changes
+
+* Rails 4.x is no longer supported
+* Ruby 2.2 or newer is required
+* Built-in support for the `nested_form` gem has been completely removed
+* The `icon` option is no longer supported (Bootstrap v4 does not include icons)
+* The deprecated Rails methods `check_boxes_collection` and `radio_buttons_collection` have been removed
+* `hide_label: true` and `skip_label: true` on individual check boxes and radio buttons apply Bootstrap 4 markup. This means the appearance of a page may change if you're upgrading from the Bootstrap 3 version of `bootstrap_form`, and you used `check_box` or `radio_button` with either of those options
+* `static_control` will no longer properly show error messages. This is the result of bootstrap changes.
+* `static_control` will also no longer accept a block, use the `value` option instead.
+* Your contribution here!
+* [#456](https://github.com/bootstrap-ruby/bootstrap_form/pull/456): Fix label `for` attribute when passing non-english characters using `collection_check_boxes` - [@ug0](https://github.com/ug0).
+
+### New features
+
+* Support for Rails 5.1 `form_with` - [@lcreid](https://github.com/lcreid).
+* Support Bootstrap v4's [Custom Checkboxes and Radios](https://getbootstrap.com/docs/4.0/components/forms/#checkboxes-and-radios-1) with a new `custom: true` option
+* Allow HTML in help translations by using the `_html` suffix on the key - [@unikitty37](https://github.com/unikitty37)
+* [#408](https://github.com/bootstrap-ruby/bootstrap_form/pull/408): Add option[:id] on static control #245 - [@duleorlovic](https://github.com/duleorlovic).
+* [#455](https://github.com/bootstrap-ruby/bootstrap_form/pull/455): Support for i18n `:html` subkeys in help text - [@jsaraiva](https://github.com/jsaraiva).
+* Adds support for `label_as_placeholder` option, which will set the label text as an input fields placeholder (and hiding the label for sr_only).
+* Your contribution here!
+
+### Bugfixes
+
+* [#357](https://github.com/bootstrap-ruby/bootstrap_form/pull/357) if provided,
+  use html option `id` to specify `for` attribute on label
+  [@duleorlovic](https://github.com/duleorlovic)
+* Your contribution here!
+
 
 ## [2.7.0][] (2017-04-21)
 
 Features:
-  * [#325](https://github.com/bootstrap-ruby/rails-bootstrap-forms/pull/325): Support :prepend and :append for the `select` helper - [@donv](https://github.com/donv).
+  * [#325](https://github.com/bootstrap-ruby/bootstrap_form/pull/325): Support :prepend and :append for the `select` helper - [@donv](https://github.com/donv).
 
 ## [2.6.0][] (2017-02-03)
 
@@ -21,7 +50,7 @@ Bugfixes:
   - Fix ambiguous first argument warning (#311, @mikenicklas)
 
 Features:
-  - Add a FormBuilder#custom_control helper [#289](https://github.com/bootstrap-ruby/rails-bootstrap-forms/pull/289)
+  - Add a FormBuilder#custom_control helper [#289](https://github.com/bootstrap-ruby/bootstrap_form/pull/289)
 
 ## [2.5.3][] (2016-12-23)
 
@@ -36,7 +65,7 @@ Bugfixes:
 ## [2.5.1][] (2016-09-23)
 
 Bugfixes:
-  - Fix getting help text for elements when using anonymous models (see [issue 282](https://github.com/bootstrap-ruby/rails-bootstrap-forms/issues/282))
+  - Fix getting help text for elements when using anonymous models (see [issue 282](https://github.com/bootstrap-ruby/bootstrap_form/issues/282))
 
 ## [2.5.0][] (2016-08-12)
 
@@ -129,7 +158,7 @@ Features:
 ## 2.1.0 (2014-04-01)
 
 Moved GitHub repository from https://github.com/potenza/bootstrap_form
-to https://github.com/bootstrap-ruby/rails-bootstrap-forms
+to https://github.com/bootstrap-ruby/bootstrap_form
 
 Bugfixes:
 
@@ -169,11 +198,11 @@ Features:
   - Added support for bootstrap_form_tag (@baldwindavid)
 
 
-[Pending Release]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.7.0...HEAD
-[2.7.0]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.6.0...v2.7.0
-[2.6.0]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.5.3...v2.6.0
-[2.5.3]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.5.2...v2.5.3
-[2.5.2]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.5.1...v2.5.2
-[2.5.1]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.5.0...v2.5.1
-[2.5.0]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.4.0...v2.5.0
-[2.4.0]: https://github.com/bootstrap-ruby/rails-bootstrap-forms/compare/v2.3.0...v2.4.0
+[Pending Release]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.7.0...HEAD
+[2.7.0]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.6.0...v2.7.0
+[2.6.0]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.5.3...v2.6.0
+[2.5.3]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.5.2...v2.5.3
+[2.5.2]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.5.1...v2.5.2
+[2.5.1]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.5.0...v2.5.1
+[2.5.0]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.4.0...v2.5.0
+[2.4.0]: https://github.com/bootstrap-ruby/bootstrap_form/compare/v2.3.0...v2.4.0
